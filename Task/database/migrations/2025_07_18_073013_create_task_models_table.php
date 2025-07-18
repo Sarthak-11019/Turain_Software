@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('task_models', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');      // ->after('id');  // it woll place the columnafter this
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('image');
             $table->string('title');
             $table->text('desc');
