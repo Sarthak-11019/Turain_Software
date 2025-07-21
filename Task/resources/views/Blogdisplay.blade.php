@@ -40,6 +40,7 @@
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         .header h1 {
@@ -170,6 +171,29 @@
             margin-bottom: 20px;
         }
 
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+            color: white;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -182,15 +206,25 @@
             .blog-card {
                 margin-bottom: 20px;
             }
+
+            .logout-btn {
+                position: static;
+                margin-top: 15px;
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-
+@if(session('user_id'))
 @if(isset($Blogdata))
     <div class="container">
         <div class="header">
             <h1>Task Blog Posts</h1>
+            <a href="{{ route('logout') }}" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Log Out
+            </a>
         </div>
 
         @if(session('Message'))
@@ -221,10 +255,10 @@
                             <span><i class="fas fa-sync-alt me-1"></i> {{ $data->updated_at->diffForHumans() }}</span>
                         </div>
                         <div class="blog-actions">
-                            <a href="#" class="action-btn edit-btn">
+                            <a href="{{ route('edit', ['id' => $data->id]) }}" class="action-btn edit-btn">
                                 <i class="fas fa-edit me-1"></i> Edit
                             </a>
-                            <a href="#" class="action-btn delete-btn">
+                            <a href="{{ route('delete', ['id' => $data->id]) }}" class="action-btn delete-btn" onclick="return confirm('Are You Sure ?')">
                                 <i class="fas fa-trash-alt me-1"></i> Delete
                             </a>
                         </div>
@@ -248,7 +282,7 @@
         </div>
     </div>
 @endif
-
+@endif <!--If Session Is Valid then Only This Page will shows up-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -313,6 +313,9 @@
     </style>
 </head>
 <body>
+    @if(session('Message'))
+               <script> alert('{{ session('Message') }}') </script>
+        @endif 
     <div class="container">
         <div class="left-panel">
             <h2>Welcome Back!</h2>

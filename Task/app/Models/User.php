@@ -8,7 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
-{
+{   
+    // for join with task table 
+    public function tasks()
+    {
+        return $this->hasMany(TaskModel::class, 'user_id');
+    }
+    
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -45,4 +51,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
 }
